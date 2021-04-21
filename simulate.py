@@ -5,31 +5,29 @@ from multiprocessing import Pool, Process
 
 
 from boid import Boid, Phonebook
+from config import *
+import ui
 
 
 
-
-
-scene = canvas(title='Examples of Tetrahedrons',
-     width=960, height=540,
+#Create Scene
+scene = canvas(title='Boids Simulation',
+     width=SCENE_WIDTH, height=SCENE_HEIGHT,
      center=vector(0,0,0), background=color.cyan)
 
 
 
-
-
-
 #create boids
-for i in range(200):
-    Boid(simpleShape=True)
-centerBoid = Boid(debug=False)#create debug boid
-predBoid = Boid(predator=True)
-predBoid = Boid(predator=True)
-predBoid = Boid(predator=True)
+for i in range(NUM_BOIDS):
+    Boid(BOID_CONFIG,)
+centerBoid = Boid(BOID_CONFIG)#create debug/center boid
+
+for i in range(NUM_PREDATORS):
+    predBoid = Boid(PREDATOR_CONFIG)
+
 
 #follow mode?
-followMode = False
-if followMode:
+if CAMERA_FOLLOW_MODE:
     scene.camera.follow(centerBoid.model) 
     centerBoid.visualModel.opacity = 0.1
 
@@ -40,11 +38,14 @@ b = sphere( pos=vec(-1,2,0), radius=80,
       texture={'file':'texture.png'} ) 
 
 
-def updateFunc(boid, dt):
-    boid.update(dt)
+#Create UI Elements
+scene.append_to_caption('\n\n')
+scene.append_to_caption('Boid Speed:')
+slider( bind=ui.speed_slider, min=0.0, max=15.0, step=0.5, value=BOID_CONFIG['speed'], centerBoid=centerBoid )
+scene.append_to_caption('\n\n')
 
 
-RATE = 45
+RATE = MAX_FRAMERATE
 dt = 1.0/(1.0 * RATE)
 scene.autoscale = False 
 currentTime = time.time()
@@ -53,7 +54,7 @@ rates = []
 
 
 start = time.time()
-simLength = 0 # in seconds
+simLength = SIM_LENGTH # in seconds
 
 #main game loop
 scene.waitfor('click') #start loop on click
@@ -67,7 +68,7 @@ while (time.time() - start) < simLength or simLength == 0:
     diff = newTime - currentTime
     if (diff == 0): diff = 0.0001
     currentTime = newTime #update current time
-    scene.caption = str( round(1.0 / diff) ) #add frame rate to scene caption
+    #scene.caption = str( round(1.0 / diff) ) #add frame rate to scene caption
     rates.append(round(1.0 / diff))
 
     #update neighbor map
@@ -75,7 +76,7 @@ while (time.time() - start) < simLength or simLength == 0:
 
 
 
-    if followMode:
+    if CAMERA_FOLLOW_MODE:
         avgPos = -centerBoid.direction + scene.camera.axis
         avgPos.mag = 1
         scene.camera.axis = avgPos
@@ -90,7 +91,6 @@ while (time.time() - start) < simLength or simLength == 0:
 
 
 print("Sim done")
-
 print("Average framerate: ", sum(rates) / len(rates))
 
 

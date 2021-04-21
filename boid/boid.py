@@ -12,12 +12,12 @@ class Boid:
 
     phonebook = Phonebook()
 
-    def __init__(self, debug=False, predator=False, simpleShape=False):
+    def __init__(self, configObject):
 
         
 
-        self.predator = predator
-        self.debug = debug
+        self.predator = configObject['is_predator']
+        self.debug = configObject['debugMode']
         self.id = id(self) #each boid has a unique id
 
         #add self to phonebook
@@ -31,10 +31,9 @@ class Boid:
         
         
         #construct the visual model
-        color=vector(1,0,1)
-        if self.predator: color=vector(1,1,0)
+        color=configObject['color']
 
-        if simpleShape:
+        if configObject['simpleShape']:
             self.visualModel = ellipsoid(pos=startingPos, length=1, height=0.5, width=0.2, shininess=1.0, color=color)
         else:
             head = ellipsoid(pos=startingPos, length=1, height=0.5, width=0.2, shininess=1.0, color=color) 
@@ -47,14 +46,11 @@ class Boid:
         self.targetDirection = vector(0,0,0) #Direction that the boid WANTS to be moving
         self.addRandomTargetDirection() #Add some starting randomness
 
-        #TODO: these should probably be passed into this class
-        if self.predator:
-            self.range = 12 #how far from the center can it travel
-            self.speed = 5.0
-            self.visualModel.size.mag = 3
-        else:
-            self.range = 10 #how far from the center can it travel
-            self.speed = 7.0
+
+        #adjust boid properties
+        self.range = configObject['range']
+        self.speed = configObject['speed']
+        self.visualModel.size.mag = configObject['size']
 
         #neighbor stuff
         self.sightRange = 4 #how far can this boid see?
