@@ -1,7 +1,7 @@
 from vpython import *
 import random
 import time
-from multiprocessing import Pool, Process
+from multiprocessing import Pool, Process, freeze_support
 
 
 from boid import Boid, Phonebook
@@ -43,6 +43,10 @@ scene.append_to_caption('\n\n')
 scene.append_to_caption('Boid Speed:')
 slider( bind=ui.speed_slider, min=0.0, max=15.0, step=0.5, value=BOID_CONFIG['speed'], centerBoid=centerBoid )
 scene.append_to_caption('\n\n')
+def B(b):
+    predBoid = Boid(PREDATOR_CONFIG)
+button( bind=B, text='Add Predator!' )
+scene.append_to_caption('\n\n')
 
 
 RATE = MAX_FRAMERATE
@@ -56,12 +60,12 @@ rates = []
 start = time.time()
 simLength = SIM_LENGTH # in seconds
 
+
 #main game loop
 scene.waitfor('click') #start loop on click
 while (time.time() - start) < simLength or simLength == 0:
     rate(RATE) #set rate
 
-    #scene.waitfor('keyup')  #step frame by frame
 
     #calculate frame rate
     newTime = time.time()
@@ -80,7 +84,6 @@ while (time.time() - start) < simLength or simLength == 0:
         avgPos = -centerBoid.direction + scene.camera.axis
         avgPos.mag = 1
         scene.camera.axis = avgPos
-
 
 
 

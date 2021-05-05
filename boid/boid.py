@@ -3,7 +3,6 @@ import random
 import numpy as np
 import time
 
-
 import boid.vector_shader as vs
 from boid.neighbors import Phonebook
 
@@ -134,7 +133,6 @@ class Boid:
                 dist = vs.get_distance(point1, point2)
                 if dist < 5.0:
                     away = -norm(currentPos  - self.model.pos) #Vector pointing away from predator
-                    if self.debug: arrow(pos=self.model.pos, axis=away, shaftwidth=0.2)
                     self.targetDirection = self.adjustDirection(away , 1.0)
 
 
