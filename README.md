@@ -16,7 +16,7 @@ Simulation parameters like the number of boids, number of predators, and many mo
 
 
 ## Examples
-
+***GIF framerates are low here, click on image for better view. Download and run codebase for best results!***
 #### 300 Boids with 3 Predators
 ![300 Boids with 3 Predators GIF](/examples/300Boids3Predators.gif)
 
