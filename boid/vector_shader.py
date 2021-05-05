@@ -1,5 +1,4 @@
 from vpython import *
-from numba import jit, float64, typeof
 import numpy as np
 
 
@@ -12,7 +11,6 @@ def vector_to_numpy(vector):
 def numpy_to_vector(array):
     return vector(array[0], array[1], array[2])
 
-@jit( nopython=True )
 def get_distance(point1, point2):
 
     # subtracting vector
@@ -27,11 +25,6 @@ def get_distance(point1, point2):
     # return Euclidean distance
     return np.sqrt(sum_sq)
 
-
-
-
-
-@jit
 def getAvgDirectionOfVectors(vectorArray):
     '''finds the average of a numpy array'''
     return np.mean(vectorArray, axis=0)

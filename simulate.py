@@ -6,7 +6,6 @@ from multiprocessing import Pool, Process, freeze_support
 
 from boid import Boid, Phonebook
 from config import *
-import ui
 
 
 
@@ -39,9 +38,19 @@ b = sphere( pos=vec(-1,2,0), radius=80,
 
 
 #Create UI Elements
+
+def update_value(attr, value, centerBoid):
+    for boid in centerBoid.phonebook.getAllBoids():
+        setattr(boid, attr, value)
+
+def speed_slider(s):
+    #Update speed
+    update_value('speed', s.value, s.centerBoid)
+
+
 scene.append_to_caption('\n\n')
 scene.append_to_caption('Boid Speed:')
-slider( bind=ui.speed_slider, min=0.0, max=15.0, step=0.5, value=BOID_CONFIG['speed'], centerBoid=centerBoid )
+slider( bind=speed_slider, min=0.0, max=15.0, step=0.5, value=BOID_CONFIG['speed'], centerBoid=centerBoid )
 scene.append_to_caption('\n\n')
 def B(b):
     predBoid = Boid(PREDATOR_CONFIG)
