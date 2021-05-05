@@ -13,3 +13,15 @@ First, make sure that you have all of the requiremnts installed from `requiremen
 After the requirements are installed, the simulation can be run using `python simulate.py`. This should open up a browser window with the simulation, click the main window to start the simulation.
 
 Simulation parameters like the number of boids, number of predators, and many more can be changed in `config.py`.
+
+
+## Examples
+
+#### 300 Boids with 3 Predators
+![300 Boids with 3 Predators GIF](/examples/300Boids3Predators.gif)
+
+#### 300 Boids
+![300 Boids GIF](/examples/300Boids.gif)
+
+#### 500 Boids
+![500 Boids GIF](/examples/500Boids.gif)

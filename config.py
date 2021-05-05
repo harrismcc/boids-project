@@ -5,7 +5,7 @@ from vpython import vector
 #Boids
 NUM_BOIDS = 300
 DEBUG_BOID = False
-NUM_PREDATORS = 3
+NUM_PREDATORS = 0
 
 #Camera & Scene
 SCENE_WIDTH = 1920 #960
